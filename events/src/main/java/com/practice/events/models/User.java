@@ -57,7 +57,7 @@ public class User {
     private Date updatedAt;
     
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
-    private List<Post> post;
+    private List<Event> event;
     
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
     private List<Comment> comment;
