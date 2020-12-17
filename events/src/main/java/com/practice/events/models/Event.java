@@ -17,26 +17,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Transient;
-
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="events")
+public class Event {
     
 //	ATTRIBUTES
 	
-    @Id
+	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+	
+	@Size(min=5, max=20, message="Event Name must be at least 2 characters!")
+    private String name;
     
-    @Size(min=2, max=20, message="First Name must be at least 2 characters!")
-    private String firstName;
-    
-    @Size(min=2, max=20, message="Last Name must be at least 2 characters!")
-    private String lastName;
+    private String date;
     
     @Size(min=5, max=20, message="Location Name must be at least 5 characters!")
     private String location;
@@ -44,36 +40,28 @@ public class User {
     @Size(min=2, max=2, message="State must be abbreviated and 2 characters!")
     private String state;
     
-	@Email(message="Email must be valid!")
-    private String email;
-    
-    @Size(min=5, message="Password must be greater than 5 characters!")
-    private String password;
-    
-    @Transient
-    private String passwordConfirmation;
-    
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
     
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
-    private List<Event> events;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User creator;
     
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="event", fetch = FetchType.LAZY)
     private List<Comment> comments;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "joining", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "event_id")
+        joinColumns = @JoinColumn(name = "event_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<Event> joining;
+    private List<User> joiners;
     
 //	Constructors
-
-	public User() {
+    
+    public Event() {
     }
     
 //	PRESETS
@@ -90,24 +78,24 @@ public class User {
 //	METHODS
     
 	// Id
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
 
-    //  First Name
-    public String getFirstName() {
-		return firstName;
+	// Name
+	public String getName() {
+		return name;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	// Last Name
-	public String getLastName() {
-		return lastName;
+	// Date
+	public String getDate() {
+		return date;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	// Location
@@ -125,31 +113,7 @@ public class User {
 	public void setState(String state) {
 		this.state = state;
 	}
-    
-    // Email
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	// Password
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	// Password Confirmation
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
-
+	
 	// Date/Time
 	public Date getCreatedAt() {
 		return createdAt;
@@ -160,14 +124,14 @@ public class User {
 
 // 	Relationship
   // One to Many
-	// Events
-	public List<Event> getEvents() {
-		return events;
+	// Creator
+	public User getCreator() {
+		return creator;
 	}
-	public void setEvents(List<Event> events) {
-		this.events = events;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
-	
+
 	// Comments
 	public List<Comment> getComments() {
 		return comments;
@@ -175,18 +139,15 @@ public class User {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
+
   // Many to Many
-	// Joining
-	public List<Event> getJoining() {
-		return joining;
-	}
-	public void setJoining(List<Event> joining) {
-		this.joining = joining;
+	// Joiners
+	public List<User> getJoiners() {
+		return joiners;
 	}
 
-	
-
-	
+	public void setJoiners(List<User> joiners) {
+		this.joiners = joiners;
+	}
+    
 }
-
