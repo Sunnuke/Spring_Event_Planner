@@ -1,0 +1,2 @@
+# Spring_Event_Planner
+Okay for this project I will be combining practices of JPA methods, standard Spring login/registration/validation with Bcrypt, CRUD(Create, Read, Update, Delete) Methods, etc... (basic essentials such as POST/GET Data, Data Persistence, and MySQL/Apache server app). The concept of this build will be a web app that users can use to post events and other users can join, as well as show suggestions based on their location, and post comments on the event's page.
