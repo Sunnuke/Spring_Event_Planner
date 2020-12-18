@@ -13,7 +13,7 @@ public class CommentService {
 	private CommentRepository commentRepository;
 	
 //	CREATE
-	public Comment createEvent(Comment comment) {
+	public Comment createComment(Comment comment) {
 		return commentRepository.save(comment);
 	}
 }
