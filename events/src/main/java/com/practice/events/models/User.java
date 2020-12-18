@@ -17,6 +17,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Transient;
@@ -40,10 +41,11 @@ public class User {
     @Size(min=5, max=20, message="Location Name must be at least 5 characters!")
     private String location;
     
-    @Size(min=2, max=2, message="State must be abbreviated and 2 characters!")
+    @Size(min=2, message="You must select a State!!")
     private String state;
     
 	@Email(message="Email must be valid!")
+	@Pattern(regexp=".+@.+\\..+", message="Email must be valid!")	
     private String email;
     
     @Size(min=5, message="Password must be greater than 5 characters!")

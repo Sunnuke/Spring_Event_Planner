@@ -36,6 +36,7 @@
 							<p><form:input path="email"/></p>
 							<p><form:password path="location"/></p>
 							<p><form:select path="state">
+								<form:option value="">Select State</form:option>
 								<form:option value="AL">Alabama</form:option>
 								<form:option value="AK">Alaska</form:option>
 								<form:option value="AZ">Arizona</form:option>
@@ -99,7 +100,7 @@
 	
 		<div class="col">
 		    <h1>Login</h1>
-		    <p style="color: red;"><c:out value="${errors}" /></p>
+		    <p style="color: red;"><c:out value="${error}" /></p>
 		    <form method="post" action="/login">
 		    	<div class="container">
 			   		<div class="row">

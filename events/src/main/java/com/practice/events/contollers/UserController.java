@@ -31,10 +31,6 @@ public class UserController {
     public String registerForm(@ModelAttribute("user") User user) {
         return "/log/registrationPage.jsp";
     }
-    @RequestMapping("/login")
-    public String login() {
-        return "/log/loginPage.jsp";
-    }
     
     // Processing routes for Registering or Logging in
     @RequestMapping(value="/registration", method=RequestMethod.POST)
@@ -58,7 +54,7 @@ public class UserController {
     		User account = userService.registerUser(user);
     		Long id = account.getId();
     		session.setAttribute("id", id);
-			return "redirect:/home";
+			return "redirect:/events";
 		}	
     }
 
@@ -69,23 +65,13 @@ public class UserController {
     		User user = userService.findByEmail(email);
     		Long id = user.getId();
     		session.setAttribute("id", id);
-			return "redirect:/home";
+			return "redirect:/events";
 		}
         // else, add error messages and return the login page
     	else {
-    		redirect.addFlashAttribute("errors", "User Name or Password is incorrect!");
-    		return "redirect:/login";
+    		redirect.addFlashAttribute("error", "User Name or Password is incorrect!");
+    		return "redirect:/registration";
     	}
-    }
-    
-    // Displays a success page informing the user that they are logged in
-    @RequestMapping("/home")
-    public String home(HttpSession session, Model model) {
-        // get user from session, save them in the model and return the home page
-    	Long id = (Long) session.getAttribute("id");
-    	User user = userService.findUserById(id);
-    	model.addAttribute("user", user);
-    	return "/log/homePage.jsp";
     }
     
     // Closes user's session
@@ -94,6 +80,16 @@ public class UserController {
         // invalidate session
     	session.invalidate();
         // redirect to login page
-    	return "redirect:/login";
+    	return "redirect:/registration";
     }
+    
+//  // Displays a success page informing the user that they are logged in
+//  @RequestMapping("/home")
+//  public String home(HttpSession session, Model model) {
+//      // get user from session, save them in the model and return the home page
+//  	Long id = (Long) session.getAttribute("id");
+//  	User user = userService.findUserById(id);
+//  	model.addAttribute("user", user);
+//  	return ".jsp";
+//  }
 }
