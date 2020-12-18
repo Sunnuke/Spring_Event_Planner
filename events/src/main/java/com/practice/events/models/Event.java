@@ -46,9 +46,9 @@ public class Event {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User creator;
-    
-    @OneToMany(mappedBy="event", fetch = FetchType.LAZY)
+    private User host;
+
+	@OneToMany(mappedBy="event", fetch = FetchType.LAZY)
     private List<Comment> comments;
     
     @ManyToMany(fetch = FetchType.LAZY)
@@ -125,11 +125,11 @@ public class Event {
 // 	Relationship
   // One to Many
 	// Creator
-	public User getCreator() {
-		return creator;
+	public User getHost() {
+		return host;
 	}
-	public void setCreator(User creator) {
-		this.creator = creator;
+	public void setHost(User host) {
+		this.host = host;
 	}
 
 	// Comments

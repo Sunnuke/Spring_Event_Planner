@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -57,7 +56,7 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
     
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="host", fetch = FetchType.LAZY)
     private List<Event> events;
     
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
